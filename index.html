@@ -13,6 +13,7 @@
             --card-bg: #ffffff;
             --text-color: #2b2d42;
             --border-color: #e2e8f0;
+            --success-color: #2a9d8f;
         }
 
         body {
@@ -52,7 +53,7 @@
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
         }
@@ -61,8 +62,8 @@
             background-color: white;
             border: 2px solid var(--primary-color);
             color: var(--primary-color);
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
             font-weight: 600;
             border-radius: 30px;
             cursor: pointer;
@@ -122,12 +123,23 @@
             border: 1px solid var(--border-color);
             padding: 1.25rem;
             border-radius: 8px;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .exercise-item h4 {
             margin: 0 0 0.5rem 0;
             color: var(--primary-color);
+        }
+
+        .diagram-box {
+            background: #eef2f7;
+            border: 1px dashed var(--secondary-color);
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            margin: 0.8rem 0;
+            white-space: pre-wrap;
+            color: #1e293b;
         }
 
         .solution {
@@ -137,6 +149,36 @@
             font-size: 0.95rem;
         }
 
+        .interactive-box {
+            background: #f8fafc;
+            border: 2px solid var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .interactive-box input {
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .interactive-box button {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .interactive-box button:hover {
+            opacity: 0.9;
+        }
+
         footer {
             text-align: center;
             padding: 2rem;
@@ -144,11 +186,6 @@
             font-size: 0.9rem;
             border-top: 1px solid var(--border-color);
             margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            header h1 { font-size: 1.8rem; }
-            .card { padding: 1.2rem; }
         }
     </style>
     <script>
@@ -162,122 +199,142 @@
             document.getElementById(sectionId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
+
+        function verificarMRU() {
+            let v = parseFloat(document.getElementById('mru-v').value);
+            let t = parseFloat(document.getElementById('mru-t').value);
+            let resDiv = document.getElementById('mru-resultado');
+            if(isNaN(v) || isNaN(t)) {
+                resDiv.innerHTML = "Por favor ingresa valores válidos.";
+                return;
+            }
+            let distancia = v * t;
+            resDiv.innerHTML = `<strong>¡Correcto!</strong> La distancia recorrida es d = v · t = ${distancia} metros.`;
+        }
     </script>
 </head>
 <body>
 
     <header>
         <h1>Mecánica y Electromagnetismo</h1>
-        <p>ESCOM - Instituto Politécnico Nacional | Apuntes, Fórmulas y Ejercicios Resueltos</p>
+        <p>ESCOM - IPN | Plataforma de Teoría, Ejercicios y Modos de Práctica</p>
     </header>
 
     <div class="container">
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="showSection('mru')">1. Cinemática 1D</button>
-            <button class="tab-btn" onclick="showSection('tiro')">2. Tiro Parabólico</button>
-            <button class="tab-btn" onclick="showSection('circular')">3. Movimiento Circular</button>
+            <button class="tab-btn active" onclick="showSection('teoria')">1. Teoría y Fórmulas</button>
+            <button class="tab-btn" onclick="showSection('resueltos')">2. Ejercicios Resueltos</button>
+            <button class="tab-btn" onclick="showSection('practica-datos')">3. Práctica (Ingresar Datos)</button>
+            <button class="tab-btn" onclick="showSection('practica-diagrama')">4. Práctica (Con Diagrama)</button>
         </div>
 
-        <!-- SECCIÓN 1: CINEMÁTICA 1D -->
-        <div id="mru" class="section-content active">
+        <!-- SECCIÓN 1: TEORÍA Y FÓRMULAS -->
+        <div id="teoria" class="section-content active">
             <div class="card">
-                <h2>Movimiento Rectilíneo y Caída Libre</h2>
-                <p>Estudio del movimiento de los objetos en una dimensión mediante ecuaciones cinemáticas sin considerar las causas que lo provocan[cite: 2].</p>
+                <h2>Fundamentos y Modelos Físicos</h2>
+                <p>Resumen teórico basado en las presentaciones oficiales de la academia de física de ESCOM.</p>
                 
+                <h3>1. Cinemática en una Dimensión (MRU y MRUA)</h3>
                 <div class="formula-box">
                     MRU: x = x₀ + v·t<br>
                     MRUA: v = v₀ + a·t, &nbsp;&nbsp; x = x₀ + v₀·t + ½·a·t²<br>
-                    Caída Libre (y): v = v₀ - g·t, &nbsp;&nbsp; y = y₀ + v₀·t - ½·g·t²
+                    Caída Libre: y = y₀ + v₀·t - ½·g·t² (con g = 9.81 m/s²)
                 </div>
 
-                <h3>Ejercicios Resueltos Destacados</h3>
+                <h3>2. Tiro Parabólico (2 Dimensiones)</h3>
+                <div class="formula-box">
+                    Eje X (MRU): x = x₀ + (v₀·cos θ)·t<br>
+                    Eje Y (MRUA): y = y₀ + (v₀·sen θ)·t - ½·g·t²<br>
+                    Componentes: v_x = v₀·cos θ, &nbsp;&nbsp; v_y = v₀·sen θ - g·t
+                </div>
+
+                <h3>3. Movimiento Circular (Coordenadas Polares)</h3>
+                <div class="formula-box">
+                    Velocidad Tangencial: v = r·ω<br>
+                    Aceleración Centrípeta: a_c = v² / r = r·ω²<br>
+                    Aceleración Tangencial: a_t = r·α
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: EJERCICIOS RESUELTOS -->
+        <div id="resueltos" class="section-content">
+            <div class="card">
+                <h2>Ejercicios Resueltos con Estructura Académica</h2>
                 
                 <div class="exercise-item">
-                    <h4>Ejercicio 1: Frenado de Lancha</h4>
+                    <h4>Ejercicio: Frenado de Lancha (MRUA)</h4>
                     <p>Una lancha motora a 30 m/s se aproxima a una boya a 100 m. Se frena con una aceleración constante de -3.5 m/s²[cite: 97].</p>
+                    <div class="diagram-box">
+ [Lancha] v₀ = 30 m/s            [Boya]
+   ------>                      (o)
+   |--------- 100 m ------------|
+   a = -3.5 m/s²
+                    </div>
                     <div class="solution">
-                        <strong>Solución:</strong><br>
-                        a) Tiempo en alcanzar la boya: <strong>t = 4.53 s</strong><br>
-                        b) Velocidad final: <strong>v = 14.14 m/s</strong>[cite: 97]
+                        <strong>Solución Paso a Paso:</strong><br>
+                        1. Ecuación de posición: \(x = x_0 + v_0 t + \frac{1}{2}at^2\)<br>
+                        2. Sustituyendo valores: \(100 = 0 + 30t + \frac{1}{2}(-3.5)t^2\)<br>
+                        3. Resolviendo para el tiempo: <strong>t = 4.53 s</strong><br>
+                        4. Velocidad final: \(v = v_0 + at \rightarrow v = 30 + (-3.5)(4.53) =\) <strong>14.14 m/s</strong>[cite: 97]
                     </div>
                 </div>
 
                 <div class="exercise-item">
-                    <h4>Ejercicio 2: Persecución Policial</h4>
-                    <p>Un coche viaja a velocidad constante de 45 m/s. 1 segundo después, un policía arranca con aceleración constante de 3 m/s²[cite: 105].</p>
-                    <div class="solution">
-                        <strong>Solución:</strong><br>
-                        Planteando la igualdad de posiciones x<sub>policia</sub> = x<sub>coche</sub> se obtiene una ecuación cuadrática cuyo tiempo de alcance es <strong>t = 30.97 s</strong>[cite: 105].
+                    <h4>Ejercicio: Tiro Parabólico en Motocicleta</h4>
+                    <p>Rampa a 53°, río de 40 m de ancho y ribera a 15 m por debajo del tope de la rampa[cite: 117].</p>
+                    <div class="diagram-box">
+             / (v₀, θ = 53°)
+            /
+           /--------- [Río de 40m] -----------> [Ribera (-15m)]
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECCIÓN 2: TIRO PARABÓLICO -->
-        <div id="tiro" class="section-content">
-            <div class="card">
-                <h2>Movimiento en Dos Dimensiones (Tiro Parabólico)</h2>
-                <p>Combinación de un Movimiento Rectilíneo Uniforme (MRU) horizontal y un Movimiento Rectilíneo Uniformemente Acelerado (MRUA) vertical por efecto de la gravedad[cite: 30].</p>
-                
-                <div class="formula-box">
-                    Eje X: x = x₀ + (v₀·cos θ)·t<br>
-                    Eje Y: y = y₀ + (v₀·sen θ)·t - ½·g·t²<br>
-                    Velocidades: v_x = v₀·cos θ, &nbsp;&nbsp; v_y = v₀·sen θ - g·t
-                </div>
-
-                <h3>Ejercicios Resueltos Destacados</h3>
-
-                <div class="exercise-item">
-                    <h4>Ejercicio 1: Salto sobre Río en Motocicleta</h4>
-                    <p>Rampa inclinada a 53°, río de 40 m de ancho y ribera a 15 m por debajo del tope de la rampa[cite: 117].</p>
                     <div class="solution">
-                        <strong>Solución:</strong><br>
-                        a) Rapidez necesaria en el tope: <strong>v₀ = 17.8 m/s</strong><br>
-                        b) Con la mitad de la rapidez, cae al río a 28.4 m de la ribera cercana[cite: 117].
-                    </div>
-                </div>
-
-                <div class="exercise-item">
-                    <h4>Ejercicio 2: Bateo de Béisbol</h4>
-                    <p>Pelota lanzada con v₀ = 37 m/s a un ángulo θ = 53.1°[cite: 112].</p>
-                    <div class="solution">
-                        <strong>Solución:</strong><br>
-                        a) Posición en t = 2s: x = 44.4 m, y = 39.56 m (v = 24.35 m/s, θ = 24.16°)[cite: 112].<br>
-                        b) Altura máxima h = 44.63 m en t = 3.02 s[cite: 112].
+                        <strong>Solución Paso a Paso:</strong><br>
+                        1. Relación de tiempo con la componente horizontal: \(t = \frac{x}{v_0 \cos\theta}\)<br>
+                        2. Sustitución en la ecuación vertical de posición y = -15m[cite: 117].<br>
+                        3. Rapidez requerida en el tope: <strong>v₀ = 17.8 m/s</strong>[cite: 117].
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SECCIÓN 3: MOVIMIENTO CIRCULAR -->
-        <div id="circular" class="section-content">
+        <!-- SECCIÓN 3: MODO PRÁCTICA (INGRESAR DATOS) -->
+        <div id="practica-datos" class="section-content">
             <div class="card">
-                <h2>Dinámica y Cinemática del Movimiento Circular</h2>
-                <p>Análisis en coordenadas polares utilizando vectores unitarios radiales (\(\hat{e}_r\)) y tangenciales (\(\hat{e}_\theta\))[cite: 46, 49].</p>
-                
-                <div class="formula-box">
-                    Velocidad tangencial: v = r·ω<br>
-                    Aceleración centrípeta: a_c = v² / r = r·ω²<br>
-                    Aceleración tangencial: a_t = r·α
-                </div>
+                <h2>Modo Práctica: Resolución Interactiva</h2>
+                <p>Pon a prueba tus conocimientos calculando parámetros físicos mediante la entrada de datos.</p>
 
-                <h3>Ejercicios Resueltos Destacados</h3>
+                <div class="interactive-box">
+                    <h3>Simulador MRU: Distancia Recorrida</h3>
+                    <p>Un objeto se desplaza a velocidad constante. Calcula la distancia si conoces la velocidad y el tiempo.</p>
+                    <label>Velocidad v (m/s):</label><br>
+                    <input type="number" id="mru-v" placeholder="Ej. 15"><br>
+                    <label>Tiempo t (s):</label><br>
+                    <input type="number" id="mru-t" placeholder="Ej. 4"><br><br>
+                    <button onclick="verificarMRU()">Calcular Distancia</button>
+                    <p id="mru-resultado" style="margin-top: 1rem; font-weight: bold; color: var(--primary-color);"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: MODO PRÁCTICA (CON DIAGRAMA) -->
+        <div id="practica-diagrama" class="section-content">
+            <div class="card">
+                <h2>Modo Práctica: Análisis Basado en Diagramas</h2>
+                <p>Observa el siguiente esquema de un sistema físico, analiza los datos proporcionados y deduce el comportamiento del sistema.</p>
 
                 <div class="exercise-item">
-                    <h4>Ejercicio 1: Estación Espacial Rotatoria</h4>
-                    <p>Estación en forma de rueda de 120 m de diámetro que proporciona una gravedad artificial de 3 m/s²[cite: 122].</p>
-                    <div class="solution">
-                        <strong>Solución:</strong><br>
-                        Rapidez de rotación requerida: <strong>2.14 rev/min</strong>[cite: 122].
+                    <h4>Problema de Análisis Gráfico: Trenes en Vías Adyacentes</h4>
+                    <div class="diagram-box">
+[Tren Izquierda] a₁ = 1.4 m/s² -->           <-- [Tren Derecha] a₂ = 2.2 m/s²
+   |--------------------------- 40 m ---------------------------|
                     </div>
-                </div>
-
-                <div class="exercise-item">
-                    <h4>Ejercicio 2: Avión de Aeromodelismo</h4>
-                    <p>Masa de 0.75 kg, radio de 60 m, rapidez de 35 m/s con un cable formando 20° con la horizontal[cite: 122].</p>
+                    <p><strong>Pregunta de análisis:</strong> Dos trenes parten del reposo con una separación inicial de 40 m acelerando el uno hacia el otro[cite: 104]. Si el tren izquierdo acelera a 1.4 m/s² y el derecho a 2.2 m/s²[cite: 104], ¿qué ocurre con el tiempo de encuentro si la separación inicial disminuye a la mitad?</p>
                     <div class="solution">
-                        <strong>Solución:</strong><br>
-                        Aceleración centrípeta del avión: <strong>a_c = 21.73 m/s²</strong>[cite: 122].
+                        <details>
+                            <summary style="cursor: pointer; color: var(--secondary-color); font-weight: bold;">Ver Pista / Respuesta</summary>
+                            <p style="margin-top: 0.5rem;">Como la ecuación de posición igualada es \(\frac{1}{2}a_1 t^2 = x_0 - \frac{1}{2}a_2 t^2\), al reducir la distancia \(x_0\) a la mitad, el cuadrado del tiempo de cruce también se reduce proporcionalmente, resultando en un tiempo de encuentro menor.</p>
+                        </details>
                     </div>
                 </div>
             </div>
@@ -286,7 +343,7 @@
     </div>
 
     <footer>
-        <p>ESCOM IPN &copy; 2026 | Estructura académica adaptada para Ingeniería en Sistemas Computacionales</p>
+        <p>ESCOM IPN &copy; 2026 | Plataforma Académica Interactiva de Ingeniería en Sistemas Computacionales</p>
     </footer>
 
 </body>
