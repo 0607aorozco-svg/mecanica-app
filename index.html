@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mecánica y Electromagnetismo - ESCOM IPN</title>
+    <style>
+        :root {
+            --primary-color: #0d3b66;
+            --secondary-color: #6495ed;
+            --accent-color: #f4d35e;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2b2d42;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #1d6fa5);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.2rem;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(13, 59, 102, 0.2);
+        }
+
+        .section-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .formula-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .exercise-item {
+            background-color: #fafbfc;
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .exercise-item h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-color);
+        }
+
+        .solution {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8rem; }
+            .card { padding: 1.2rem; }
+        }
+    </style>
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(sec => sec.classList.remove('active'));
+            
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</head>
+<body>
+
+    <header>
+        <h1>Mecánica y Electromagnetismo</h1>
+        <p>ESCOM - Instituto Politécnico Nacional | Apuntes, Fórmulas y Ejercicios Resueltos</p>
+    </header>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showSection('mru')">1. Cinemática 1D</button>
+            <button class="tab-btn" onclick="showSection('tiro')">2. Tiro Parabólico</button>
+            <button class="tab-btn" onclick="showSection('circular')">3. Movimiento Circular</button>
+        </div>
+
+        <!-- SECCIÓN 1: CINEMÁTICA 1D -->
+        <div id="mru" class="section-content active">
+            <div class="card">
+                <h2>Movimiento Rectilíneo y Caída Libre</h2>
+                <p>Estudio del movimiento de los objetos en una dimensión mediante ecuaciones cinemáticas sin considerar las causas que lo provocan[cite: 2].</p>
+                
+                <div class="formula-box">
+                    MRU: x = x₀ + v·t<br>
+                    MRUA: v = v₀ + a·t, &nbsp;&nbsp; x = x₀ + v₀·t + ½·a·t²<br>
+                    Caída Libre (y): v = v₀ - g·t, &nbsp;&nbsp; y = y₀ + v₀·t - ½·g·t²
+                </div>
+
+                <h3>Ejercicios Resueltos Destacados</h3>
+                
+                <div class="exercise-item">
+                    <h4>Ejercicio 1: Frenado de Lancha</h4>
+                    <p>Una lancha motora a 30 m/s se aproxima a una boya a 100 m. Se frena con una aceleración constante de -3.5 m/s²[cite: 97].</p>
+                    <div class="solution">
+                        <strong>Solución:</strong><br>
+                        a) Tiempo en alcanzar la boya: <strong>t = 4.53 s</strong><br>
+                        b) Velocidad final: <strong>v = 14.14 m/s</strong>[cite: 97]
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <h4>Ejercicio 2: Persecución Policial</h4>
+                    <p>Un coche viaja a velocidad constante de 45 m/s. 1 segundo después, un policía arranca con aceleración constante de 3 m/s²[cite: 105].</p>
+                    <div class="solution">
+                        <strong>Solución:</strong><br>
+                        Planteando la igualdad de posiciones x<sub>policia</sub> = x<sub>coche</sub> se obtiene una ecuación cuadrática cuyo tiempo de alcance es <strong>t = 30.97 s</strong>[cite: 105].
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: TIRO PARABÓLICO -->
+        <div id="tiro" class="section-content">
+            <div class="card">
+                <h2>Movimiento en Dos Dimensiones (Tiro Parabólico)</h2>
+                <p>Combinación de un Movimiento Rectilíneo Uniforme (MRU) horizontal y un Movimiento Rectilíneo Uniformemente Acelerado (MRUA) vertical por efecto de la gravedad[cite: 30].</p>
+                
+                <div class="formula-box">
+                    Eje X: x = x₀ + (v₀·cos θ)·t<br>
+                    Eje Y: y = y₀ + (v₀·sen θ)·t - ½·g·t²<br>
+                    Velocidades: v_x = v₀·cos θ, &nbsp;&nbsp; v_y = v₀·sen θ - g·t
+                </div>
+
+                <h3>Ejercicios Resueltos Destacados</h3>
+
+                <div class="exercise-item">
+                    <h4>Ejercicio 1: Salto sobre Río en Motocicleta</h4>
+                    <p>Rampa inclinada a 53°, río de 40 m de ancho y ribera a 15 m por debajo del tope de la rampa[cite: 117].</p>
+                    <div class="solution">
+                        <strong>Solución:</strong><br>
+                        a) Rapidez necesaria en el tope: <strong>v₀ = 17.8 m/s</strong><br>
+                        b) Con la mitad de la rapidez, cae al río a 28.4 m de la ribera cercana[cite: 117].
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <h4>Ejercicio 2: Bateo de Béisbol</h4>
+                    <p>Pelota lanzada con v₀ = 37 m/s a un ángulo θ = 53.1°[cite: 112].</p>
+                    <div class="solution">
+                        <strong>Solución:</strong><br>
+                        a) Posición en t = 2s: x = 44.4 m, y = 39.56 m (v = 24.35 m/s, θ = 24.16°)[cite: 112].<br>
+                        b) Altura máxima h = 44.63 m en t = 3.02 s[cite: 112].
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: MOVIMIENTO CIRCULAR -->
+        <div id="circular" class="section-content">
+            <div class="card">
+                <h2>Dinámica y Cinemática del Movimiento Circular</h2>
+                <p>Análisis en coordenadas polares utilizando vectores unitarios radiales (\(\hat{e}_r\)) y tangenciales (\(\hat{e}_\theta\))[cite: 46, 49].</p>
+                
+                <div class="formula-box">
+                    Velocidad tangencial: v = r·ω<br>
+                    Aceleración centrípeta: a_c = v² / r = r·ω²<br>
+                    Aceleración tangencial: a_t = r·α
+                </div>
+
+                <h3>Ejercicios Resueltos Destacados</h3>
+
+                <div class="exercise-item">
+                    <h4>Ejercicio 1: Estación Espacial Rotatoria</h4>
+                    <p>Estación en forma de rueda de 120 m de diámetro que proporciona una gravedad artificial de 3 m/s²[cite: 122].</p>
+                    <div class="solution">
+                        <strong>Solución:</strong><br>
+                        Rapidez de rotación requerida: <strong>2.14 rev/min</strong>[cite: 122].
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <h4>Ejercicio 2: Avión de Aeromodelismo</h4>
+                    <p>Masa de 0.75 kg, radio de 60 m, rapidez de 35 m/s con un cable formando 20° con la horizontal[cite: 122].</p>
+                    <div class="solution">
+                        <strong>Solución:</strong><br>
+                        Aceleración centrípeta del avión: <strong>a_c = 21.73 m/s²</strong>[cite: 122].
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>ESCOM IPN &copy; 2026 | Estructura académica adaptada para Ingeniería en Sistemas Computacionales</p>
+    </footer>
+
+</body>
+</html>
